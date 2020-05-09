@@ -19,8 +19,8 @@ export default function App() {
     try {
       const response = await api.post(`repositories/${id}/like`);
 
-      const updatedRepositories = repositories.map((repo) =>
-        repo.id === id ? response.data : repo
+      const updatedRepositories = repositories.map(repo =>
+        repo.id === id ? response.data : repo,
       );
       setRepositories(updatedRepositories);
     } catch (error) {
@@ -30,7 +30,7 @@ export default function App() {
 
   function loadRepositories() {
     try {
-      api.get('repositories').then((response) => {
+      api.get('repositories').then(response => {
         setRepositories(response.data);
       });
     } catch (error) {
@@ -46,13 +46,13 @@ export default function App() {
       <SafeAreaView style={styles.container}>
         <FlatList
           data={repositories}
-          keyExtractor={(item) => item.id}
+          keyExtractor={item => item.id}
           renderItem={({ item: repository }) => (
             <View style={styles.repositoryContainer}>
               <Text style={styles.repository}>{repository.title}</Text>
 
               <View style={styles.techsContainer}>
-                {repository.techs.map((tech) => (
+                {repository.techs.map(tech => (
                   <Text key={tech} style={styles.tech}>
                     {tech}
                   </Text>
@@ -64,7 +64,7 @@ export default function App() {
                   style={styles.likeText}
                   testID={`repository-likes-${repository.id}`}
                 >
-                  {`Repository Likes: ${repository.likes}`}
+                  {`${repository.likes} ${repository.likes <=1 ? 'curtida' : 'curtidas'}`}
                 </Text>
               </View>
 
